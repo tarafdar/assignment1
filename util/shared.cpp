@@ -12,7 +12,7 @@ std::vector <int> readFile(const string fname,
 {
   int* read_sizes = NULL;
 
-  std::vector read_sizes_vec;
+  std::vector<int> read_sizes_vec;
   ifstream in_file(fname, ios::in | ios::binary);
   if (in_file.is_open())
   {
