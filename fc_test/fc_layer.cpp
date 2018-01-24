@@ -23,7 +23,7 @@ void fc_layer(float weights[MAX_INPUT_SIZE*MAX_OUTPUT_SIZE],
       }
 
       // Compute activation
-      output[b*num_outputs+o] = std::max((0.0f, output[b*num_outputs+o]);
+      output[b*num_outputs+o] = std::max(0.0f, output[b*num_outputs+o]);
     }
   }
 }
