@@ -17,10 +17,10 @@ int main()
   int retval = 0;
   
   std::string imageDir = "../../../../../nn_params/fc3/";
-  vector<int> input_size = readFile(imageDir+"input", inputs, MAX_BATCH*MAX_INPUT);
-  vector<int> output_size = readFile(imageDir+"output", gold_outputs, MAX_BATCH*MAX_OUTPUT);
-  vector<int> weight_size = readFile(imageDir+"weights", weights, MAX_OUTPUT*MAX_INPUT);
-  vector<int> bias_size = readFile(imageDir+"biases", biases, MAX_OUTPUT);
+  vector<int> input_size = readFile(imageDir+"input", inputs, MAX_BATCH*MAX_INPUT_SIZE);
+  vector<int> output_size = readFile(imageDir+"output", gold_outputs, MAX_BATCH*MAX_OUTPUT_SIZE);
+  vector<int> weight_size = readFile(imageDir+"weights", weights, MAX_OUTPUT_SIZE*MAX_INPUT_SIZE);
+  vector<int> bias_size = readFile(imageDir+"biases", biases, MAX_OUTPUT_SIZE);
 
   assert(input_size.size() == 2);
   assert(output_size.size() == 2);
@@ -32,7 +32,7 @@ int main()
   int num_outputs = output_size[1];
 
   // Do some input checking
-  if (num_inputs > MAX_INPUT || num_outputs > MAX_OUTPUT ||
+  if (num_inputs > MAX_INPUT_SIZE || num_outputs > MAX_OUTPUT_SIZE ||
       input_size[0] != output_size[0] ||
       batch_size > MAX_BATCH || 
       weight_size[0] != num_outputs || weight_size[1] != num_inputs ||
