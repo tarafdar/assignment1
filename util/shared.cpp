@@ -6,7 +6,7 @@
 #include "shared.h"
 
 using namespace std;
-int* readFile(const char* fname,
+int* readFile(const string fname,
                      float *& fptr,
                      const int max_alloc)
 {
