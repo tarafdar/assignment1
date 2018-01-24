@@ -64,14 +64,8 @@ int main()
     float total = 0.0f;
     for (int i = 0; i < BATCH_SIZE*num_outputs; i++)
     {
-      float err = fabs((outputs[i] - gold_outputs[i])/outputs[i]);
-      if(outputs[i]!=0.0f)
-	      total += err*err;
-      //if (err > 0.05)
-      //{
-      //  cout << "Error " << i << ": "<< outputs[i] << " != " << gold_outputs[i] << " " << err << endl;
-      //  retval = 1;
-      //}
+      float err = fabs((outputs[i] - gold_outputs[i]));
+      total += err*err;
     }
     float avg_error = total/(BATCH_SIZE *num_outputs);
     cout << "Average Square Error " << total << " " << (BATCH_SIZE * num_outputs) << " " << avg_error << endl;

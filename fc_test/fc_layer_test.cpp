@@ -9,25 +9,18 @@ using namespace std;
 
 int main()
 {
-  
-
-
   float * weights;
   float * biases;
   float * inputs;
   float * gold_outputs;
   float * outputs;
   int retval = 0;
-
-
   
   std::string imageDir = "fc1";
   int num_inputs = readFile(("/workspace/assignment1/nn_params/" + imageDir + "/input").c_str(), inputs)/BATCH_SIZE;
   int num_outputs = readFile(("/workspace/assignment1/nn_params/" +imageDir + "/output").c_str(), gold_outputs)/BATCH_SIZE;
   int num_weights = readFile(("/workspace/assignment1/nn_params/" + imageDir + "/weights").c_str(), weights);
   int num_biases = readFile(("/workspace/assignment1/nn_params/" + imageDir +"/biases").c_str(), biases);
-
-
 
   cout << "Begin Test\n"
        << "Batch Size: " << BATCH_SIZE << "\n"
@@ -47,7 +40,7 @@ int main()
   }
   else
   {
-	// Allocate space for accelerator outputs
+	  // Allocate space for accelerator outputs
 	  outputs = new float[BATCH_SIZE*num_outputs];
     // Run Accelerator
     fc_layer(weights, biases,
@@ -55,16 +48,14 @@ int main()
              num_inputs, num_outputs);
 
     // Check outputs
+    float total = 0.0f;
     for (int i = 0; i < BATCH_SIZE*num_outputs; i++)
     {
-      float err = fabs((outputs[i] - gold_outputs[i])/outputs[i]);
-      if (err > 0.05)
-      {
-        cout << "Error " << i << ": "<< outputs[i] << " != " << gold_outputs[i] << endl;
-        retval = 1;
-      }
+      float err = fabs((outputs[i] - gold_outputs[i]));
+      total += err*err;
     }
-
+    float avg_error = total/(BATCH_SIZE *num_outputs);
+    cout << "Average Square Error " << total << " " << (BATCH_SIZE * num_outputs) << " " << avg_error << endl;
   }
   return retval;
 }
