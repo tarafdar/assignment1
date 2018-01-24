@@ -21,5 +21,13 @@ void conv_layer(float weights[K*K*ID*OD],
               float input[MAX_CONV_INPUT*BATCH_SIZE],
               float output[MAX_CONV_OUTPUT*BATCH_SIZE],
               const int num_inputs,
-              const int num_outputs);
+              const int num_outputs,
+	      const int od,
+	      const int ox,
+	      const int oy,
+	      const int id,
+	      const int ix,
+	      const int iy,
+	      const int s,
+	      const int k);
 #endif
