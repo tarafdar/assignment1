@@ -3,13 +3,14 @@
 
 void fc_layer(float weights[MAX_INPUT*MAX_OUTPUT],
               float biases[MAX_OUTPUT],
-              float input[MAX_INPUT*BATCH_SIZE],
-              float output[MAX_OUTPUT*BATCH_SIZE],
+              float input[MAX_INPUT*MAX_BATCH],
+              float output[MAX_OUTPUT*MAX_BATCH],
+              const int batch_size,
               const int num_inputs,
               const int num_outputs)
 {
   // Batch Iterator
-  fc_layer_label0:for (int b = 0; b < BATCH_SIZE; b++) {
+  fc_layer_label0:for (int b = 0; b < batch_size; b++) {
     // Output Node Iterator
     fc_layer_label1:for (int o = 0; o < num_outputs; o++) {
       // Set bias
