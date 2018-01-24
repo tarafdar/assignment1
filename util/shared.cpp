@@ -1,27 +1,47 @@
 
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 #include "shared.h"
 
 using namespace std;
-int readFile(const char* fname, float *& fptr)
+int* readFile(const char* fname,
+                     float *& fptr,
+                     const int max_alloc)
 {
-  ifstream in_file(fname, ios::in | ios::binary | ios::ate);
+  int* read_sizes = NULL;
+
+  ifstream in_file(fname, ios::in | ios::binary);
   if (in_file.is_open())
   {
-    streampos size = in_file.tellg();
-    fptr = new float[1024*1024];
-    cout << "Reading " << size/sizeof(float) << " words from " << fname << endl;
-    in_file.seekg(0, ios::beg);
-    in_file.read(reinterpret_cast<char*>(&fptr[0]), size);
+    // Read header
+    int read_dims;
+    in_file.read(reinterpret_cast<char*>(&read_dims), sizeof(int));
+    fptr = new float[max_alloc];
+    read_sizes = new int[read_dims];
+
+    // Read dimension data
+    in_file.read(reinterpret_cast<char*>(read_sizes),
+                 sizeof(int)*read_dims);
+
+    // Read the array
+    int read_alloc = 1;
+    for (int i = 0; i < read_dims; i++)
+      read_alloc *= read_sizes[i];
+
+    if (read_alloc <= max_alloc)
+      in_file.read(reinterpret_cast<char*>(&fptr[0]), sizeof(float)*read_alloc);
+    else
+    {
+      cerr << "Desired dimensions too large\n";
+      delete [] read_sizes;
+      delete [] fptr;
+      read_sizes = NULL;
+    }
     in_file.close();
-    return size/sizeof(float);
   }
   else
-  {
-    cout << "Couldn't open file: " << fname << endl;
-    return -1;
-  }
+    cerr << "Couldn't open file: " << fname << endl;
+  return read_sizes;
 }
-

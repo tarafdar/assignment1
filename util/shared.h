@@ -1,5 +1,10 @@
-
 #ifndef _SHARED_H
 #define _SHARED_H
-int readFile(const char* fname, float *& fptr);
+
+#include <vector>
+
+int* readFile(const char* fname,
+              float *& fptr,
+              const int max_alloc);
+
 #endif
