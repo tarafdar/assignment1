@@ -7,13 +7,13 @@
 using namespace std;
 
 std::vector <int> readFile(const string fname,
-                     float *& fptr,
-                     const int max_alloc)
+                           float *& fptr,
+                           const int max_alloc)
 {
   int* read_sizes = NULL;
 
   std::vector<int> read_sizes_vec;
-  ifstream in_file(fname, ios::in | ios::binary);
+  ifstream in_file(fname.c_str(), ios::in | ios::binary);
   if (in_file.is_open())
   {
     // Read header
