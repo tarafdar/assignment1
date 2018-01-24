@@ -4,8 +4,8 @@
 #include <string>
 #include <vector>
 
-int* readFile(const std::string fname,
-              float *& fptr,
-              const int max_alloc);
+std::vector<int> readFile(const std::string fname,
+                          float *& fptr,
+                          const int max_alloc);
 
 #endif
