@@ -6,12 +6,13 @@
 #include "shared.h"
 
 using namespace std;
-int* readFile(const char* fname,
+std::vector <int> readFile(std::string fname,
                      float *& fptr,
                      const int max_alloc)
 {
   int* read_sizes = NULL;
 
+  std::vector read_sizes_vec;
   ifstream in_file(fname, ios::in | ios::binary);
   if (in_file.is_open())
   {
@@ -27,8 +28,11 @@ int* readFile(const char* fname,
 
     // Read the array
     int read_alloc = 1;
-    for (int i = 0; i < read_dims; i++)
+    for (int i = 0; i < read_dims; i++){
       read_alloc *= read_sizes[i];
+	  read_sizes_vec.push_back(read_sizes[i]);
+	}
+
 
     if (read_alloc <= max_alloc)
       in_file.read(reinterpret_cast<char*>(&fptr[0]), sizeof(float)*read_alloc);
@@ -43,5 +47,5 @@ int* readFile(const char* fname,
   }
   else
     cerr << "Couldn't open file: " << fname << endl;
-  return read_sizes;
+  return read_sizes_vec;
 }

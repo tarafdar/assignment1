@@ -3,7 +3,7 @@
 
 #include <vector>
 
-int* readFile(const char* fname,
+std::vector<int> readFile(std::string fname,
               float *& fptr,
               const int max_alloc);
 
