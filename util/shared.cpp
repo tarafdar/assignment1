@@ -47,5 +47,6 @@ std::vector <int> readFile(std::string fname,
   }
   else
     cerr << "Couldn't open file: " << fname << endl;
+  delete read_sizes;
   return read_sizes_vec;
 }
