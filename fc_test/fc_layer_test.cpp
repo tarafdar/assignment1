@@ -3,7 +3,6 @@
 #include <cmath>
 #include <cassert>
 #include "fc_layer.h"
-//#include "../../../../../util/shared.h"
 #include "util/shared.h"
 
 using namespace std;
@@ -17,7 +16,6 @@ int main()
   float * outputs;
   int retval = 0;
   
-  //std::string imageDir = "../../../../../nn_params/fc3/";
   std::string imageDir = "nn_params/fc3/";
   vector<int> input_size = readFile(imageDir+"input", inputs, MAX_BATCH*MAX_INPUT_SIZE);
   vector<int> output_size = readFile(imageDir+"output", gold_outputs, MAX_BATCH*MAX_OUTPUT_SIZE);
@@ -52,9 +50,9 @@ int main()
          << "Num Weights: " << weight_size[0]*weight_size[1] << "\n"
          << "Num Biases: " << bias_size[0] << endl;
 
+    // Allocate space for accelerator outputs
+    outputs = new float[batch_size*num_outputs];
 
-	  // Allocate space for accelerator outputs
-	  outputs = new float[batch_size*num_outputs];
     // Run Accelerator
     fc_layer(weights, biases,
              inputs, outputs,
@@ -64,12 +62,13 @@ int main()
     float total = 0.0f;
     for (int i = 0; i < batch_size*num_outputs; i++)
     {
-      float err = fabs((outputs[i] - gold_outputs[i]));
+      float err = fabs(outputs[i] - gold_outputs[i]);
       total += err*err;
     }
+
     float avg_error = total/(batch_size*num_outputs);
-    cout << "Average Squared Error " << total << " "
-         << (batch_size*num_outputs) << " " << avg_error << endl;
+    cout << "Mean Squared Error " << avg_error << endl;
   }
+
   return retval;
 }
