@@ -6,8 +6,8 @@
 #include <stdlib.h>
 #include "conv_layer.h"
 #include "util/shared.h"
-using namespace std;
 
+using namespace std;
 
 int main()
 {
@@ -18,25 +18,18 @@ int main()
   float * outputs;
   int retval = 0;
 
-
   cout << "Starting Convolution Test " << endl;
 
-
   std::string imageDir = "nn_params/conv1_7x7_s2/";
-
   std::vector<int> input_params = readFile(imageDir + "/input", inputs, MAX_CONV_INPUT *MAX_BATCH);
   std::vector<int> output_params = readFile(imageDir + "/output", gold_outputs, MAX_CONV_OUTPUT * MAX_BATCH);
   std::vector<int> weight_params = readFile(imageDir + "/weights", weights, ID*OD*K*K);
   std::vector<int> bias_params = readFile(imageDir +"/biases", biases, OD);
 
-
-
   int num_inputs = 1;
   int num_outputs = 1;
   int num_weights = 1;
   int num_biases = 1;
-
-
 
   for(int i=1; i<input_params.size();i++){
       num_inputs*=input_params[i];
@@ -60,8 +53,8 @@ int main()
     cerr << "Problem with input files\n";
     retval = 1;
   }
-  else{
-        outputs = new float[MAX_BATCH*num_outputs];
+  else {
+    outputs = new float[MAX_BATCH*MAX_CONV_OUTPUT];
    
     int b = input_params[0];  
     int od = output_params[1];  
@@ -107,10 +100,8 @@ int main()
     }
     float avg_error = total/(b *num_outputs);
     cout << "Mean Square Error " << avg_error << endl;
-
-
   }
 
-  return 0;
+  return retval;
 }
 

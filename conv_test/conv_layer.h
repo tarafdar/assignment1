@@ -2,10 +2,8 @@
 #ifndef _CONV_LAYER_H
 #define _CONV_LAYER_H
 
+// Limits
 #define MAX_BATCH 10
-#define MAX_CONV_INPUT 3*230*230 
-#define MAX_CONV_OUTPUT 64*112*112 
-#define S 2
 #define K 7
 #define ID 3
 #define OD 64
@@ -13,6 +11,8 @@
 #define IY 230
 #define OX 112
 #define OY 112
+#define MAX_CONV_INPUT ID*IX*IY 
+#define MAX_CONV_OUTPUT OD*OX*OY 
 
 using namespace std;
 

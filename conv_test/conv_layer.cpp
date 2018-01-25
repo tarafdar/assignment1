@@ -1,4 +1,3 @@
-
 #include <algorithm>
 #include "conv_layer.h"
 
@@ -16,36 +15,45 @@ void conv_layer(float weights[K*K*ID*OD],
 	      const int s,
 	      const int k)
 {
+  // Batch
   for (int b_=0; b_< b; b_++)
   {
-      for (int o_d = 0; o_d < od; o_d++)
+    // Output Dimensions (Feature Maps)
+    for (int o_d = 0; o_d < od; o_d++)
+    {
+      // Output Y Dimension
+      for (int o_y = 0; o_y < oy; o_y++)
       {
-        for (int o_y = 0; o_y < oy; o_y++)
+        // Output X Dimension
+        for (int o_x = 0; o_x < ox; o_x++)
         {
-          for (int o_x = 0; o_x < ox; o_x++)
+          // Set bias 
+          output[b_*od*ox*oy +o_d*ox*oy + o_y*ox + o_x] = biases[o_d];
+
+          // Weighted Sum:
+   
+          // Input Dimensions (Feature Maps)
+          for (int i_d = 0; i_d < id; i_d++)
           {
-            // Set bias 
-            output[b_*od*ox*oy +o_d*ox*oy + o_y*ox + o_x] = biases[o_d];
-
-            // Convolution
-            for (int i_d = 0; i_d < id; i_d++)
+            // Input Y Dimension
+            for (int i_y = o_y*s, iiy = 0; i_y < o_y*s+k; i_y++, iiy++)
             {
-              for (int i_y = o_y*s, iiy = 0; i_y < o_y*s+k; i_y++, iiy++)
+              // Input X Dimension
+              for (int i_x = o_x*s, iix = 0; i_x < o_x*s+k; i_x++, iix++)
               {
-                for (int i_x = o_x*s, iix = 0; i_x < o_x*s+k; i_x++, iix++)
-                {
-
-                  output[b_*od*ox*oy +o_d*ox*oy + o_y*ox + o_x] += 
-                    (input[b_*id*ix*iy+i_d*ix*iy+i_y*ix+i_x] *
-                    weights[o_d*id*k*k + i_d*k*k + iiy*k + iix]);
-                }
+                output[b_*od*ox*oy + o_d*ox*oy + o_y*ox + o_x] += 
+                       (input[b_*id*ix*iy + i_d*ix*iy + i_y*ix + i_x] *
+                       weights[o_d*id*k*k + i_d*k*k + iiy*k + iix]);
               }
             }
-
-            output[b_*od*ox*oy +o_d*ox*oy + o_y*ox + o_x] = max(float(0.), output[b_*od*ox*oy+o_d*ox*oy + o_y*ox + o_x]);
           }
+
+          // Activaton Function
+          output[b_*od*ox*oy + o_d*ox*oy + o_y*ox + o_x] = 
+                 max(0.0f, output[b_*od*ox*oy + o_d*ox*oy + o_y*ox + o_x]);
         }
       }
     }
+  }
 }
 
