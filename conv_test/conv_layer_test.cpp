@@ -46,7 +46,7 @@ int main()
   }
 
   for(int i=0; i<weight_params.size();i++){
-	num_weights*=weight_params[i];
+        num_weights*=weight_params[i];
   }
   
   for(int i=0; i<bias_params.size();i++)
@@ -61,7 +61,7 @@ int main()
     retval = 1;
   }
   else{
-	outputs = new float[BATCH_SIZE*num_outputs];
+        outputs = new float[MAX_BATCH*num_outputs];
    
     int b = input_params[0];  
     int od = output_params[1];  
@@ -94,19 +94,16 @@ int main()
  
     // Run Accelerator
     conv_layer(weights, biases,
-             inputs, outputs,
-             num_inputs, num_outputs,
-	     b, od, ox, oy, id, ix, iy, s, k
-		);
+               inputs, outputs,
+               b, od, ox, oy, id, ix, iy, s, k);
 
 
     // Check outputs
     float total = 0.0f;
     for (int i = 0; i < b*num_outputs; i++)
     {
-      float err = fabs((outputs[i] - gold_outputs[i]));
-      if(outputs[i]!=0.0f)
-	      total += err*err;
+      float err = fabs(outputs[i] - gold_outputs[i]);
+      total += err*err;
     }
     float avg_error = total/(b *num_outputs);
     cout << "Mean Square Error " << avg_error << endl;
