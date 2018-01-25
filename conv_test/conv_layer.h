@@ -2,7 +2,7 @@
 #ifndef _CONV_LAYER_H
 #define _CONV_LAYER_H
 
-#define BATCH_SIZE 1
+#define BATCH_SIZE 10
 #define MAX_CONV_INPUT 8028160 
 #define MAX_CONV_OUTPUT 8028160
 #define S 2
@@ -22,6 +22,7 @@ void conv_layer(float weights[K*K*ID*OD],
               float output[MAX_CONV_OUTPUT*BATCH_SIZE],
               const int num_inputs,
               const int num_outputs,
+              const int b,
 	      const int od,
 	      const int ox,
 	      const int oy,

@@ -7,8 +7,8 @@
 using namespace std;
 
 std::vector <int> readFile(const string fname,
-                           float *& fptr,
-                           const int max_alloc)
+                     float *& fptr,
+                     const int max_alloc)
 {
   int* read_sizes = NULL;
 
