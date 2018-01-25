@@ -11,11 +11,11 @@ np.set_printoptions(threshold=np.nan)
 
 net = caffe.Net('/opt/caffe/models/bvlc_googlenet/deploy.prototxt' , '/opt/caffe/models/bvlc_googlenet/bvlc_googlenet.caffemodel', caffe.TEST)
 
-layers = ['conv1/7x7_s2', 'conv2/3x3_reduce']
-pad = [3,0]
-ix = [224,56]
-batches = [4,4]
-input_d = [3,64]
+layers = ['conv1/7x7_s2', 'conv2/3x3_reduce', 'inception_3a/1x1']
+pad = [3,0, 0]
+ix = [224,56, 28]
+batches = [4,4, 4]
+input_d = [3,64, 192]
 num_images=4
 array_image = np.zeros((num_images,3, 224, 224)).astype(np.float32) 
 
