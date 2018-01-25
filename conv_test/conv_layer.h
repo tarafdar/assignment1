@@ -3,8 +3,8 @@
 #define _CONV_LAYER_H
 
 #define MAX_BATCH 10
-#define MAX_CONV_INPUT 8028160 
-#define MAX_CONV_OUTPUT 8028160
+#define MAX_CONV_INPUT 3*230*230 
+#define MAX_CONV_OUTPUT 64*112*112 
 #define S 2
 #define K 7
 #define ID 3
