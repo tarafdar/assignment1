@@ -2,10 +2,10 @@
 #include <fstream>
 #include <cmath>
 #include <cassert>
-#include "conv_layer.h"
-#include "../../../../../util/shared.h"
 #include <vector>
 #include <stdlib.h>
+#include "conv_layer.h"
+#include "util/shared.h"
 using namespace std;
 
 
@@ -22,7 +22,7 @@ int main()
   cout << "Starting Convolution Test " << endl;
 
 
-  std::string imageDir = "../../../../../nn_params/conv1_7x7_s2/";
+  std::string imageDir = "nn_params/conv1_7x7_s2/";
 
   std::vector<int> input_params = readFile(imageDir + "/input", inputs, MAX_CONV_INPUT *MAX_BATCH);
   std::vector<int> output_params = readFile(imageDir + "/output", gold_outputs, MAX_CONV_OUTPUT * MAX_BATCH);
