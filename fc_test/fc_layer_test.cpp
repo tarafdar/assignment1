@@ -51,7 +51,7 @@ int main()
          << "Num Biases: " << bias_size[0] << endl;
 
     // Allocate space for accelerator outputs
-    outputs = new float[batch_size*num_outputs];
+    outputs = new float[MAX_BATCH*MAX_OUTPUT_SIZE];
 
     // Run Accelerator
     fc_layer(weights, biases,
